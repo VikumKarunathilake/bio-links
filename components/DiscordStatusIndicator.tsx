@@ -220,47 +220,13 @@ export default function DiscordStatusIndicator() {
                     unoptimized
                   />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 text-left"> {/* <-- ensure text aligns left */}
                   <div className="flex items-center space-x-2 mb-1">
                     <Music className="w-3 h-3 text-green-400" />
-                    <span className="text-green-300 text-xs font-medium uppercase tracking-wide">Spotify</span>
+                    <span className="text-green-300 text-xs font-medium tracking-wide">Spotify</span>
                   </div>
                   <p className="text-white text-sm font-medium truncate">{spotify.song}</p>
                   <p className="text-white/70 text-xs truncate">by {spotify.artist}</p>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Primary Activity */}
-        <AnimatePresence>
-          {primaryActivity && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className={`${currentStatus.bgColor} backdrop-blur-sm rounded-lg p-3 border ${currentStatus.borderColor}`}
-            >
-              <div className="space-y-2">
-                <div className="flex items-center space-x-2">
-                  {(() => {
-                    const IconComponent =
-                      activityTypeIcons[primaryActivity.type as keyof typeof activityTypeIcons] || Monitor
-                    return <IconComponent className="w-3 h-3 text-purple-400" />
-                  })()}
-                  <span className="text-purple-300 text-xs font-medium uppercase tracking-wide">
-                    {primaryActivity.type === 0 ? "Playing" : "Activity"}
-                  </span>
-                  {primaryActivity.timestamps?.start && (
-                    <span className="text-white/50 text-xs">{formatTimestamp(primaryActivity.timestamps.start)}</span>
-                  )}
-                </div>
-
-                <div className="space-y-1">
-                  <p className="text-white text-sm font-medium">{primaryActivity.name}</p>
-                  {primaryActivity.details && <p className="text-white/70 text-xs">{primaryActivity.details}</p>}
-                  {primaryActivity.state && <p className="text-white/50 text-xs">{primaryActivity.state}</p>}
                 </div>
               </div>
             </motion.div>

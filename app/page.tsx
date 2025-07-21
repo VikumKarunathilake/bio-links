@@ -18,6 +18,7 @@ export default function ProfileLanding() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const { status } = useDiscordStatus(30000)
   const user = status?.user
+  
 
   const handleEnter = async () => {
     try {
@@ -172,8 +173,12 @@ export default function ProfileLanding() {
                   transition={{ delay: 0.6, duration: 0.6 }}
                   className="text-white/80 text-lg mb-6 leading-relaxed text-center"
                 >
-                  <span className=" text-sm tracking-widest">Student&nbsp;|&nbsp;Tech Explorer&nbsp;|&nbsp;Building web app</span><br />
-                  Full-stack web developer focused on building scalable web applications
+                  <span className="text-sm tracking-widest whitespace-nowrap text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]">
+                    Student&nbsp;|&nbsp;Tech Explorer&nbsp;|&nbsp;Building web apps with AI
+                  </span>
+
+                  <br /> <br />
+                  Full-stack web developer focused on creating scalable applications using AI tools
                 </motion.p>
 
                 {/* Discord Status */}
