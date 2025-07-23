@@ -18,7 +18,7 @@ export default function ProfileLanding() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const { status } = useDiscordStatus(30000)
   const user = status?.user
-  
+
 
   const handleEnter = async () => {
     try {
@@ -141,16 +141,25 @@ export default function ProfileLanding() {
                   transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
                   className="relative mx-auto w-32 h-32 mb-6"
                 >
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 p-1 animate-pulse">
-                    <div className="w-full h-full rounded-full bg-white p-1">
+                  <div className="absolute inset-0 rounded-full">
+                    <div className="w-full h-full rounded-full p-1">
                       {user && (
-                        <Image
-                          src={status.user.avatar || "/placeholder.svg"}
-                          alt={`${user.username}'s Avatar`}
-                          width={120}
-                          height={120}
-                          className="w-full h-full rounded-full object-cover"
-                        />
+                        <>
+                          <Image
+                            src={status.user.avatar || "/placeholder.svg"}
+                            alt={`${user.username}'s Avatar`}
+                            width={120}
+                            height={120}
+                            className="w-full h-full rounded-full object-cover"
+                          />
+                          <Image
+                            src="/bush_camper.png"
+                            alt="Avatar Decoration - Bush Camper"
+                            width={120}
+                            height={120}
+                            className="absolute top-0 left-0 w-full h-full rounded-full object-cover pointer-events-none z-10"
+                          />
+                        </>
                       )}
                     </div>
                   </div>
