@@ -37,7 +37,7 @@ const badges: Badge[] = [
         tooltip: "Hypesquad Brilliance House",
         glowColor: "from-blue-400 via-purple-500 to-purple-600",
         pulse: true,
-        size: "lg"
+        size: "md"
     },
     {
         id: 2,
@@ -47,7 +47,7 @@ const badges: Badge[] = [
         tooltip: "Own at least 1 active application (app)...",
         glowColor: "from-green-400 via-emerald-500 to-emerald-600",
         pulse: true,
-        size: "lg"
+        size: "md"
     },
     {
         id: 3,
@@ -57,7 +57,7 @@ const badges: Badge[] = [
         tooltip: "When completing a quest from the gift inventory tab.",
         glowColor: "from-yellow-400 via-amber-500 to-amber-600",
         pulse: false,
-        size: "md"
+        size: "sm"
     },
     {
         id: 4,
@@ -67,13 +67,13 @@ const badges: Badge[] = [
         tooltip: "Once you complete its specific quests...",
         glowColor: "from-pink-400 via-rose-500 to-rose-600",
         pulse: true,
-        size: "lg"
+        size: "md"
     },
 ];
 
 const sizeClasses = {
-    sm: "w-10 h-10",
-    md: "w-14 h-14",
+    sm: "w-5 h-5",
+    md: "w-10 h-10",
     lg: "w-16 h-16"
 };
 
@@ -99,11 +99,6 @@ export default function Badges() {
                                 repeatType: "reverse",
                                 duration: 2 + Math.random()
                             } : {}
-                        }}
-                        whileHover={{
-                            scale: 1.4,
-                            rotate: [0, -15, 15, 0],
-                            transition: { duration: 0.5 }
                         }}
                         className="relative"
                     >
@@ -131,13 +126,6 @@ export default function Badges() {
                                     <div className={`absolute inset-0 rounded-full opacity-80 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br ${badge.glowColor} blur-lg -z-10`} />
                                 </div>
                             </TooltipTrigger>
-                            <TooltipContent side="bottom" className="bg-gray-900/95 backdrop-blur-md text-white border border-white/10 shadow-xl max-w-[240px]">
-                                <p className="font-bold text-sm text-center mb-1 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                                    {badge.name.toUpperCase()}
-                                </p>
-                                <p className="text-xs text-gray-200 text-center">{badge.tooltip}</p>
-                                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-gray-900/95 border-t border-l border-white/10 rotate-45" />
-                            </TooltipContent>
                         </Tooltip>
                     </motion.div>
                 ))}
