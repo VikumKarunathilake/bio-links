@@ -140,7 +140,7 @@ export default function ProfileLanding() {
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
                   transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-                  className="relative mx-auto w-32 h-32 mb-6"
+                  className="relative mx-auto w-32 h-32 mb-2"
                 >
                   <div className="absolute inset-0 rounded-full">
                     <div className="w-full h-full rounded-full p-1">

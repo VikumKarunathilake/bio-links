@@ -243,7 +243,7 @@ export default function DiscordStatusIndicator() {
               <div className="flex gap-4">
                 {/* Activity Image */}
                 {primaryActivity.assets?.large_image && (
-                  <div className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-gray-700/50">
+                  <div className="rounded-lg overflow-hidden flex-shrink-0">
                     <Image
                       src={
                         primaryActivity.assets.large_image.startsWith('mp:external/')
@@ -251,8 +251,8 @@ export default function DiscordStatusIndicator() {
                           : `https://cdn.discordapp.com/app-assets/${primaryActivity.application_id}/${primaryActivity.assets.large_image}.png`
                       }
                       alt={primaryActivity.assets.large_text || primaryActivity.name}
-                      width={64}
-                      height={64}
+                      width={80}
+                      height={80}
                       className="object-cover"
                       unoptimized
                     />
@@ -267,9 +267,9 @@ export default function DiscordStatusIndicator() {
                         activityTypeIcons[primaryActivity.type as keyof typeof activityTypeIcons] || Monitor;
                       return <IconComponent className="w-4 h-4 text-indigo-400 flex-shrink-0" />;
                     })()}
-                    <span className="text-xs font-semibold text-indigo-300 uppercase tracking-wider truncate">
+                    <span className="text-xs font-semibold text-indigo-300 tracking-wider truncate">
                       {primaryActivity.type === 0
-                        ? "Playing a Game"
+                        ? "Playing"
                         : primaryActivity.type === 1
                           ? "Streaming"
                           : "Activity"}

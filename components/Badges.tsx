@@ -35,7 +35,7 @@ const badges: Badge[] = [
         type: "svg",
         svg: "/hypesquadbrilliance.svg",
         tooltip: "Hypesquad Brilliance House",
-        glowColor: "from-blue-400 via-purple-500 to-purple-600",
+        glowColor: "from-orange-400 via-orange-500 to-orange-600",
         pulse: true,
         size: "md"
     },
@@ -45,19 +45,19 @@ const badges: Badge[] = [
         type: "svg",
         svg: "/activedeveloper.svg",
         tooltip: "Own at least 1 active application (app)...",
-        glowColor: "from-green-400 via-emerald-500 to-emerald-600",
+        glowColor: "from-green-400 via-green-500 to-green-600",
         pulse: true,
         size: "md"
     },
     {
         id: 3,
         name: "Completed a Quest",
-        type: "img",
-        src: "/quest.png",
+        type: "svg",
+        svg: "/quest.svg",
         tooltip: "When completing a quest from the gift inventory tab.",
-        glowColor: "from-yellow-400 via-amber-500 to-amber-600",
-        pulse: false,
-        size: "sm"
+        glowColor: "from-[#b2c1ff] via-[#a6b8ff] to-[#8fa3ff]",
+        pulse: true,
+        size: "md"
     },
     {
         id: 4,
@@ -65,7 +65,7 @@ const badges: Badge[] = [
         type: "svg",
         svg: "/orb.svg",
         tooltip: "Once you complete its specific quests...",
-        glowColor: "from-pink-400 via-rose-500 to-rose-600",
+        glowColor: "from-[#ef51e8] via-[#7ae9d6] to-[#7b49ff]",
         pulse: true,
         size: "md"
     },
@@ -73,7 +73,7 @@ const badges: Badge[] = [
 
 const sizeClasses = {
     sm: "w-5 h-5",
-    md: "w-10 h-10",
+    md: "w-8 h-8",
     lg: "w-16 h-16"
 };
 
@@ -97,7 +97,7 @@ export default function Badges() {
                             y: badge.pulse ? {
                                 repeat: Infinity,
                                 repeatType: "reverse",
-                                duration: 2 + Math.random()
+                                duration: 10 + Math.random()
                             } : {}
                         }}
                         className="relative"
