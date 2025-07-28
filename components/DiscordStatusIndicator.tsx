@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useDiscordStatus } from "@/hooks/useDiscordStatus"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { RefreshCw, Wifi, WifiOff, AlertCircle, Music, Gamepad2, Code, Monitor, ExternalLink } from "lucide-react"
+import { RefreshCw, Wifi, WifiOff, AlertCircle, Music, Gamepad2, Code, Monitor, ExternalLink, Globe, Smartphone } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 
@@ -227,6 +227,76 @@ export default function DiscordStatusIndicator() {
                   </div>
                   <p className="text-white text-sm font-medium truncate">{spotify.song}</p>
                   <p className="text-white/70 text-xs truncate">by {spotify.artist}</p>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence>
+          {primaryActivity && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className={`${currentStatus.bgColor} backdrop-blur-sm rounded-lg p-3 border ${currentStatus.borderColor}`}
+            >
+              <div className="flex gap-4">
+                {/* Activity Image */}
+                {primaryActivity.assets?.large_image && (
+                  <div className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-gray-700/50">
+                    <Image
+                      src={
+                        primaryActivity.assets.large_image.startsWith('mp:external/')
+                          ? `https://media.discordapp.net/external/${primaryActivity.assets.large_image.replace('mp:external/', '')}`
+                          : `https://cdn.discordapp.com/app-assets/${primaryActivity.application_id}/${primaryActivity.assets.large_image}.png`
+                      }
+                      alt={primaryActivity.assets.large_text || primaryActivity.name}
+                      width={64}
+                      height={64}
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                )}
+
+                <div className="flex-1 min-w-0">
+                  {/* Activity Header */}
+                  <div className="flex items-center gap-2 mb-1">
+                    {(() => {
+                      const IconComponent =
+                        activityTypeIcons[primaryActivity.type as keyof typeof activityTypeIcons] || Monitor;
+                      return <IconComponent className="w-4 h-4 text-indigo-400 flex-shrink-0" />;
+                    })()}
+                    <span className="text-xs font-semibold text-indigo-300 uppercase tracking-wider truncate">
+                      {primaryActivity.type === 0
+                        ? "Playing a Game"
+                        : primaryActivity.type === 1
+                          ? "Streaming"
+                          : "Activity"}
+                    </span>
+                    {primaryActivity.timestamps?.start && (
+                      <span className="text-xs text-gray-400 ml-auto">
+                        {formatTimestamp(primaryActivity.timestamps.start)}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Activity Details */}
+                  <div className="space-y-1">
+                    <h3 className="text-white font-medium text-sm leading-tight truncate">
+                      {primaryActivity.name}
+                    </h3>
+                    {primaryActivity.details && (
+                      <p className="text-gray-300 text-xs leading-tight truncate">
+                        {primaryActivity.details}
+                      </p>
+                    )}
+                    {primaryActivity.state && (
+                      <p className="text-gray-400 text-xs leading-tight truncate">
+                        {primaryActivity.state}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -11,6 +11,7 @@ import DiscordStatusIndicator from "@/components/DiscordStatusIndicator"
 import MediaControls from "@/components/MediaControls"
 import { useDiscordStatus } from "@/hooks/useDiscordStatus"
 import { FaSteam, FaSpotify, FaYoutube, FaTiktok } from "react-icons/fa";
+import Badges from "@/components/Badges"
 
 export default function ProfileLanding() {
   const [hasEntered, setHasEntered] = useState(false)
@@ -163,6 +164,13 @@ export default function ProfileLanding() {
                       )}
                     </div>
                   </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  <Badges />
                 </motion.div>
 
                 {/* Name */}
