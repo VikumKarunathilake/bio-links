@@ -120,7 +120,6 @@ export async function GET() {
     }
 
     const lanyardResponse: LanyardResponse = await response.json()
-    console.log("Raw Lanyard response:", JSON.stringify(lanyardResponse, null, 2))
 
     if (!lanyardResponse.success) {
       console.error("Lanyard API returned success: false", lanyardResponse.error)
@@ -141,7 +140,6 @@ export async function GET() {
     }
 
     const discordUser = data.discord_user
-    console.log("Discord user data:", JSON.stringify(discordUser, null, 2))
 
     // Build avatar URL with proper fallback handling
     let avatarUrl: string
@@ -162,8 +160,6 @@ export async function GET() {
 
       avatarUrl = `https://cdn.discordapp.com/embed/avatars/${defaultAvatarIndex}.png`
     }
-
-    console.log("Generated avatar URL:", avatarUrl)
 
     // Filter out non-relevant activities (like Spotify, which is handled separately)
     const relevantActivities = (data.activities || []).filter(
@@ -207,20 +203,6 @@ export async function GET() {
       lastUpdated: new Date().toISOString(),
       source: "lanyard",
     }
-
-    console.log("Successfully processed Discord status:", {
-      username: discordUser.username,
-      globalName: discordUser.global_name,
-      displayName: discordUser.display_name,
-      status: data.discord_status,
-      activitiesCount: relevantActivities.length,
-      hasSpotify: data.listening_to_spotify,
-      activeDevices: {
-        desktop: data.active_on_discord_desktop,
-        web: data.active_on_discord_web,
-        mobile: data.active_on_discord_mobile,
-      },
-    })
 
     return NextResponse.json(responseData)
   } catch (error) {

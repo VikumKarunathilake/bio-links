@@ -2,16 +2,43 @@
 
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Github, Linkedin, ExternalLink } from "lucide-react"
 import Image from "next/image"
 import ExitFullscreenButton from "@/components/ExitFullscreenButton"
 import DiscordStatusIndicator from "@/components/DiscordStatusIndicator"
 import MediaControls from "@/components/MediaControls"
+import { SocialLinks } from "@/components/social-links"
 import { useDiscordStatus } from "@/hooks/useDiscordStatus"
-import { FaSteam, FaSpotify, FaYoutube, FaTiktok } from "react-icons/fa";
+import { EntryGate } from "@/components/ui/entry-gate"
 import Badges from "@/components/Badges"
+import LyricsDisplay from "@/components/lyrics-display"
+
+const lyrics = [
+  { time: 0.03, text: "(Notice me, Senpai, I'm-)" },
+  { time: 6.58, text: "(Notice me, Senpai, I'm-)" },
+  { time: 19.22, text: "Notice me, Senpai, I'm your girl, Hentai" },
+  { time: 22.37, text: "やめてください let's watch some anime" },
+  { time: 25.52, text: "SugarCrash, Senpai, without you, I die" },
+  { time: 28.76, text: "やめてください I'll be your waifu" },
+  { time: 32.0, text: "Hey, Senpai" },
+  { time: 33.67, text: "Be my boyfriend, samurai" },
+  { time: 35.13, text: "Don't be shy, you're my うるさい バカ" },
+  { time: 38.56, text: "オニイチャン, I'll be your Sister-chan" },
+  { time: 41.76, text: "Don't hide, don't run, I'll use my Byakugan" },
+  { time: 44.81, text: "I'll be anything you want, cutie, furry, neko girl" },
+  { time: 48.09, text: "UwU ロリ, ヤンデレ, メイド, デーモン, ツンデレ" },
+  { time: 51.43, text: "Big boobs, king size, colored hair, big eyes" },
+  { time: 54.52, text: "Hot like fire, cold like ice, かわいい, sweet nice" },
+  { time: 57.77, text: "Notice me, Senpai, I'm your girl, Hentai" },
+  { time: 60.82, text: "やめてください let's watch some anime" },
+  { time: 64.04, text: "SugarCrash, Senpai, without you, I die" },
+  { time: 67.14, text: "やめてください I'll be your waifu" },
+  { time: 75.23, text: "Notice me, Senpai" },
+  { time: 81.79, text: "I'll be your waifu" },
+  { time: 83.39, text: "Notice me, Senpai" },
+  { time: 88.09, text: "Notice me, Senpai" },
+  { time: 94.36, text: "I'll be your waifu" },
+]
 
 export default function ProfileLanding() {
   const [hasEntered, setHasEntered] = useState(false)
@@ -20,10 +47,9 @@ export default function ProfileLanding() {
   const { status } = useDiscordStatus(30000)
   const user = status?.user
 
-
   const handleEnter = async () => {
     try {
-      const container = document.documentElement // or document.body if you prefer
+      const container = document.documentElement
 
       if (container.requestFullscreen) {
         await container.requestFullscreen()
@@ -44,13 +70,11 @@ export default function ProfileLanding() {
       setHasEntered(true)
     } catch (error) {
       console.log("Autoplay or fullscreen blocked:", error)
-      // Still allow entry even if fullscreen fails
       setHasEntered(true)
     }
   }
 
   useEffect(() => {
-    // Try to autoplay on load (may be blocked by browser)
     const tryAutoplay = async () => {
       try {
         if (videoRef.current) {
@@ -65,7 +89,10 @@ export default function ProfileLanding() {
     }
 
     if (audioRef.current) {
-      audioRef.current.volume = 0.03 // 3% volume
+      audioRef.current.volume = 0.15
+    }
+    if (videoRef.current) {
+      videoRef.current.volume = 0.15
     }
 
     tryAutoplay()
@@ -82,47 +109,22 @@ export default function ProfileLanding() {
         muted={true}
         playsInline
       >
-        <source src="/bg4.mp4" type="video/mp4" />
+        <source src="/bg10.mp4" type="video/mp4" />
       </video>
 
       {/* Background Audio */}
       <audio ref={audioRef} autoPlay loop className="hidden">
-        <source src="/bg2.mp3" type="audio/mpeg" />
+        <source src="/SugarCrash!2.mp3" type="audio/mpeg" />
       </audio>
+
+      {/* Lyrics Display Component */}
+      <LyricsDisplay lyrics={lyrics} audioRef={audioRef} hasEntered={hasEntered} />
 
       {/* Media Controls */}
       <MediaControls videoRef={videoRef} audioRef={audioRef} hasEntered={hasEntered} />
 
-      {/* Entry Gate Overlay */}
-      <AnimatePresence>
-        {!hasEntered && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 2, ease: "easeInOut" }}
-            className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
-              className="absolute inset-0 z-50 flex items-center justify-center backdrop-blur-sm cursor-pointer"
-              onClick={handleEnter}
-            >
-              <motion.div
-                className="text-center"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-              >
-                <h2 className="text-white text-xl opacity-70">
-                  <b>Click To Enter...</b>
-                </h2>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Entry Gate */}
+      <EntryGate show={!hasEntered} onEnter={handleEnter} title="Click To Enter..." />
 
       {/* Profile Content */}
       <AnimatePresence>
@@ -193,7 +195,6 @@ export default function ProfileLanding() {
                   <span className="text-sm tracking-widest whitespace-nowrap text-white drop-shadow-[0_0_8px_rgba(139,92,246,0.4)]">
                     Student&nbsp;|&nbsp;Tech Explorer&nbsp;|&nbsp;Building web apps with AI
                   </span>
-
                   <br /> <br />
                   Full-stack web developer focused on creating scalable applications using AI tools
                 </motion.p>
@@ -211,69 +212,7 @@ export default function ProfileLanding() {
                 </motion.div>
 
                 {/* Social Links */}
-                <motion.div
-                  initial={{ y: 30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 1, duration: 0.6 }}
-                  className="flex justify-center space-x-4"
-                >
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-[#010409]/10 border-[#010409]/20 text-white hover:bg-[#010409]/20 hover:scale-110 transition-all duration-300"
-                    asChild
-                  >
-                    <a href="https://github.com/VikumKarunathilake" target="_blank" rel="noopener noreferrer">
-                      <Github className="w-4 h-4" />
-                    </a>
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-[#171d25]/10 border-[#171d25]/20 text-white hover:bg-[#171d25]/20 hover:scale-110 transition-all duration-300"
-                    asChild
-                  >
-                    <a href="https://steamcommunity.com/id/Vikum_K/" target="_blank" rel="noopener noreferrer">
-                      <FaSteam className="w-4 h-4" />
-                    </a>
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-green-700/10 border-green-700/20 text-white hover:bg-green-700/30 hover:scale-110 transition-all duration-300"
-
-                    asChild
-                  >
-                    <a href="https://open.spotify.com/user/31q2s45y56ymwfy5zhlbfqwkzb3y" target="_blank" rel="noopener noreferrer">
-                      <FaSpotify className="w-4 h-4" />
-                    </a>
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-red-700/10 border-red-700/20 text-white hover:bg-red-700/30 hover:scale-110 transition-all duration-300"
-                    asChild
-                  >
-                    <a href="https://www.youtube.com/@Vikum_K" target="_blank" rel="noopener noreferrer">
-                      <FaYoutube className="w-4 h-4" />
-                    </a>
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="bg-[#2cf4ef]/10 border-[#2cf4ef]/20 text-white hover:bg-[#ef0549]/10 hover:border-[#ef0549]/20 hover:scale-110 transition-all duration-300"
-                    asChild
-                  >
-                    <a href="https://www.youtube.com/@Vikum_K" target="_blank" rel="noopener noreferrer">
-                      <FaTiktok className="w-4 h-4" />
-                    </a>
-                  </Button>
-
-                </motion.div>
+                <SocialLinks />
               </div>
             </Card>
           </motion.div>
