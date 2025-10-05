@@ -30,22 +30,24 @@ export default function LyricsDisplay({ lyrics, audioRef, hasEntered }: LyricsDi
       const currentTime = audio.currentTime
 
       // Find the current lyric
+      let newLyricIndex = -1;
       for (let i = 0; i < lyrics.length; i++) {
-        if (currentTime >= lyrics[i].time && i > lastLyricIndexRef.current) {
-          // Check if we're within 0.5 seconds of the lyric time to avoid duplicates
-          if (currentTime - lyrics[i].time < 0.5) {
-            // Add current lyric to previous lyrics (limited to last 3)
-            setPreviousLyrics((prev) => {
-              const newPrevious = [...prev, lyrics[i].text]
-              return newPrevious.slice(-3)
-            })
-
-            // Set current lyric
-            setCurrentLyric(lyrics[i].text)
-            lastLyricIndexRef.current = i
-            break
-          }
+        if (currentTime >= lyrics[i].time) {
+          newLyricIndex = i;
         }
+      }
+
+      if (newLyricIndex !== -1 && newLyricIndex !== lastLyricIndexRef.current) {
+        const newLyric = lyrics[newLyricIndex];
+        // Add current lyric to previous lyrics (limited to last 3)
+        setPreviousLyrics((prev) => {
+          const newPrevious = [...prev, newLyric.text]
+          return newPrevious.slice(-3)
+        })
+
+        // Set current lyric
+        setCurrentLyric(newLyric.text)
+        lastLyricIndexRef.current = newLyricIndex
       }
     }
 
