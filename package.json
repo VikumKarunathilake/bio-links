@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev",
+    "build": "node init && next build",
+    "dev": "node init && next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "node init && next start"
   },
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
@@ -48,7 +48,7 @@
     "framer-motion": "latest",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
-    "next": "14.2.16",
+    "next": "14.2.35",
     "next-themes": "^0.4.4",
     "react": "^18",
     "react-day-picker": "8.10.1",
